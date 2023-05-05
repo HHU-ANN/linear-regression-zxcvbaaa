@@ -89,10 +89,13 @@ class LassoRegression:
 
 # 进行岭回归
 def ridge(data):
-    ridge_reg = RidgeRegression(lambda_v=0.05) # 设置参数alpha
-    ridge_reg.train(X_train, y_train) # 使用训练数据拟合模型
-    result = ridge_reg.predict(data) # 进行预测
-    return float(result)
+    from ridge import RidgeRegression
+    ridge_r = RidgeRegression()
+    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3)
+    ridge_r.train(X_train, y_train)
+    y_pred = ridge_r.predict(X_test)
+    return float(y_pred)
+
 def lasso(data):
     lasso_reg = LassoRegression(alpha=0.1)
     lasso_reg.fit(X_train,y_train)
