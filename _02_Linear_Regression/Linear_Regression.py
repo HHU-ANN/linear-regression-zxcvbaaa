@@ -15,8 +15,8 @@ def ridge(x,y):
     ws=denom.I*(x.T*y)
     return ws
     
-#def lasso(data):
-   # pass
+def lasso(data):
+    pass
 
 def read_data(path='./data/exp02/'):#path data是上一级目录的
     x = np.load(path + 'X_train.npy')
