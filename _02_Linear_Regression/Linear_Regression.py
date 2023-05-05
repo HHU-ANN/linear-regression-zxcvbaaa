@@ -12,8 +12,7 @@ import numpy as np
 
 def ridge(x,y):
      lam = 0.2
-    xTx=np.dot(x.T,x)
-    denom=xTx+np.eye(np.shape(x)[1])*lam
+    denom=np.dot(x.T,x)+np.eye(np.shape(x)[1])*lam
     ws=denom.I*(x.T*y)
     return ws
     
