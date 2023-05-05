@@ -17,20 +17,31 @@ def read_data(path='./data/exp02/'):
 
 X_train, y_train = read_data()
 
-class standard_ridge():
+class ridge():
     def __init__(self):
         pass
-
-    def fit(self,x=X_train,y=y_train,Lambda):
-        m = x.shape[0]
+    
+    #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数，Lambda为正则项参数
+    def fit(self,x,y,a,epochs,Lambda):  
+        #计算总数据量
+        m=x.shape[0]
+        #给x添加偏置项
         X = np.concatenate((np.ones((m,1)),x),axis=1)
-        xMat= np.mat(X)
-        yMat = np.mat(y.reshape(-1,1))
-        xTx = xMat.T * xMat
-        rxTx = xTx + np.eye(xMat.shape[1]) * Lambda * m
-        #rxTx.I为rxTx的逆矩阵
-        w = rxTx.I * xMat.T * yMat
-        return w
+        #计算总特征数
+        n = X.shape[1]
+        #初始化W的值,要变成矩阵形式
+        W=np.mat(np.ones((n,1)))
+        #X转为矩阵形式
+        xMat = np.mat(X)
+        #y转为矩阵形式，这步非常重要,且要是m x 1的维度格式
+        yMat =np.mat(y.reshape(-1,1))
+        #循环epochs次
+        for i in range(epochs):
+            gradient = xMat.T*(xMat*W-yMat)/m + Lambda * W
+            W=W-a * gradient
+        return W
+    def predict(self,x,w):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
+        return np.dot(x,w)
 
 def lasso(data):
     pass
