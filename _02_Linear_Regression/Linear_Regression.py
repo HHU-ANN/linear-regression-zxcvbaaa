@@ -10,26 +10,29 @@ except ImportError as e:
 
 import numpy as np
 
-def ridge(x,y):
-     lam = 0.2
-    denom=np.dot(x.T,x)+np.eye(np.shape(x)[1])*lam
-    ws=denom.I*(x.T*y)
-    return ws
-    
-def lasso(data):
-    pass
-
-def read_data(path='./data/exp02/'):#path data是上一级目录的
+def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
     y = np.load(path + 'y_train.npy')
     return x, y
 
-def main(data):
-    x,y=read_data()
-    weight=ridge(x.y)
-    print(weight)
-    return data @ weight
+X_train, y_train = read_data()
 
-if __name__ == '__main__':
-    main()
-   
+class standard_ridge():
+    def __init__(self):
+        pass
+
+    def fit(self,x=X_train,y=y_train,Lambda):
+        m = x.shape[0]
+        X = np.concatenate((np.ones((m,1)),x),axis=1)
+        xMat= np.mat(X)
+        yMat = np.mat(y.reshape(-1,1))
+        xTx = xMat.T * xMat
+        rxTx = xTx + np.eye(xMat.shape[1]) * Lambda * m
+        #rxTx.I为rxTx的逆矩阵
+        w = rxTx.I * xMat.T * yMat
+        return w
+
+def lasso(data):
+    pass
+
+
