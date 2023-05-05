@@ -1,12 +1,14 @@
 # 最终在main函数中传入一个维度为6的numpy数组，输出预测值
 
-import os
+iimport os
 
 try:
     import numpy as np
 except ImportError as e:
     os.system("sudo pip3 install numpy")
     import numpy as np
+
+import numpy as np
 
 def ridge(x,y):
      lam = 0.2
