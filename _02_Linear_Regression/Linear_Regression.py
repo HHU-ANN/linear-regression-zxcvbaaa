@@ -90,7 +90,7 @@ class LassoRegression:
 
 # 进行岭回归
 def ridge(data):
-    from _ridge import RidgeRegression
+    from Ridge import RidgeRegression
     ridge_r = RidgeRegression()
     X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3)
     ridge_r.train(X_train, y_train)
