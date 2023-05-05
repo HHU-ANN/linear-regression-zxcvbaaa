@@ -9,12 +9,13 @@ except ImportError as e:
     import numpy as np
 
 import numpy as np
-from matplotlib import pyplot as plt
 
 def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
     y = np.load(path + 'y_train.npy')
     return x, y
+
+
 
 X_train, y_train = read_data()
 
