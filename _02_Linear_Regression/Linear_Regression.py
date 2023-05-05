@@ -18,3 +18,14 @@ def read_data(path='./data/exp02/'):#path data是上一级目录的
     x = np.load(path + 'X_train.npy')
     y = np.load(path + 'y_train.npy')
     return x, y
+
+def main(data):
+    x,y=read_data()
+    weight=model(x.y)
+    print(weight)
+    return data @ weight
+
+def model(x, y):
+    # 基础的最小二乘实现线性回归
+    # $(X^TX)^-1(X^Ty)$
+    return np.dot(np.linalg.inv(np.dot(x.T, x)), np.dot(x.T, y))
