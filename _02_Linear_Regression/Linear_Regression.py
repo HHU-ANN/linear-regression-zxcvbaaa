@@ -31,7 +31,7 @@ class RidgeRegression:
         # 模型参数w（训练时初始化）
         self.w = None
     
-    def ridge(self, X, y):
+    def ridge(self, X=X_train, y=y_train):
         #'''岭回归算法'''
         _,n = X.shape
         I = np.identity(n)
