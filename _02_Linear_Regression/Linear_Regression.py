@@ -33,13 +33,13 @@ class RidgeRegression:
     
     def ridge(self, X=X_train, y=y_train):
         #'''岭回归算法'''
-        _,n = X.shape
+        n = X.shape
         I = np.identity(n)
         tmp = np.linalg.inv(np.matmul(X.T, X) + self.lambda_v*I)
         tmp = np.matmul(tmp, X.T)
         return np.matmul(tmp, y)
     
-    def _preprocess_data_X(self, X):
+    def _preprocess_data_X(self, X=X_train):
         #'''数据预处理'''
         
         # 扩展X，添加x0列并设置为1
@@ -59,7 +59,7 @@ class RidgeRegression:
         # 使用岭回归算法估算w
         self.w = self._ridge(_X_train, y_train)
         
-    def predict(self, X):
+    def predict(self, X=X_train):
         #'''预测'''
         # 预处理X_train(添加x0列并设置为1)
         _X = self._preprocess_data_X(X)
