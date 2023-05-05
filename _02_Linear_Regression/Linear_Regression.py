@@ -19,21 +19,51 @@ def read_data(path='./data/exp02/'):
 
 X_train, y_train = read_data()
 
-# 建立岭回归类
+import numpy as np
+ 
 class RidgeRegression:
-    def __init__(self, alpha):
-        self.alpha = alpha
+ 
+    def __init__(self, lambda_v=0.05):
+        
+        # 范数项的系数
+        self.lambda_v = lambda_v
+        
+        # 模型参数w（训练时初始化）
+        self.w = None
     
-    def fit(self, X, y):
-        n_features = np.shape(X)[1]
-        # 添加正则项，防止过拟合
-        self.weights = np.dot(np.linalg.inv(np.dot(X.T, X) + 
-                               self.alpha*np.eye(n_features)), 
-                               np.dot(X.T, y))
+    def ridge(self, X, y):
+        #'''岭回归算法'''
+        _,n = X.shape
+        I = np.identity(n)
+        tmp = np.linalg.inv(np.matmul(X.T, X) + self.lambda_v*I)
+        tmp = np.matmul(tmp, X.T)
+        return np.matmul(tmp, y)
     
+    def _preprocess_data_X(self, X):
+        #'''数据预处理'''
+        
+        # 扩展X，添加x0列并设置为1
+        m, n = X.shape
+        X_ = np.empty((m, n+1))
+        X_[:,0] = 1
+        X_[:, 1:] = X
+        
+        return X_
+    
+    def train(self, X_train, y_train):
+        #'''训练模型'''
+        
+        # 预处理X_train(添加x0列并设置为1)
+        _X_train = self._preprocess_data_X(X_train)
+        
+        # 使用岭回归算法估算w
+        self.w = self._ridge(_X_train, y_train)
+        
     def predict(self, X):
-        y_pred = np.dot(X, self.weights)
-        return y_pred
+        #'''预测'''
+        # 预处理X_train(添加x0列并设置为1)
+        _X = self._preprocess_data_X(X)
+        return np.matmul(_X, self.w)
 
 # 建立Lasso回归类
 class LassoRegression:
@@ -58,13 +88,7 @@ class LassoRegression:
         return y_pred
 
 # 进行岭回归
-def ridge(data):
-    ridge_reg = RidgeRegression(alpha=0.1) # 设置参数alpha
-    ridge_reg.fit(X_train, y_train) # 使用训练数据拟合模型
-    
-    data = np.reshape(data, (1, -1)) # 将数据改为2D矩阵形式
-    result = ridge_reg.predict(data) # 进行预测
-    return float(result)
+
 def lasso(data):
     lasso_reg = LassoRegression(alpha=0.1)
     lasso_reg.fit(X_train,y_train)
