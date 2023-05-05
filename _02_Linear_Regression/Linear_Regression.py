@@ -26,6 +26,14 @@ def main(data):
     return data @ weight
 
 def model(x, y):
+   def model(x, y):
     # 基础的最小二乘实现线性回归
     # $(X^TX)^-1(X^Ty)$
-    return np.dot(np.linalg.inv(np.dot(x.T, x)), np.dot(x.T, y))
+    lam = 0.2
+    xTx=np.dot(x.T,x)
+    denom=xTx+np.eye(np.shape(x)[1])*lam
+    if np.linalg.det(denom)==0.0:
+        print("矩阵为奇异矩阵，不能转置")
+        return
+    ws=denom.I*(x.T*y)
+    return ws
