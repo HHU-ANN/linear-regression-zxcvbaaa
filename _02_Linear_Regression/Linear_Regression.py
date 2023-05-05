@@ -31,7 +31,7 @@ class RidgeRegression:
         # 模型参数w（训练时初始化）
         self.w = None
     
-    def ridge(self, X=X_train, y=y_train):
+    def _ridge(self, X, y):
         #'''岭回归算法'''
         n = X.shape
         I = np.identity(n)
@@ -39,7 +39,7 @@ class RidgeRegression:
         tmp = np.matmul(tmp, X.T)
         return np.matmul(tmp, y)
     
-    def _preprocess_data_X(self, X=X_train):
+    def _preprocess_data_X(self, X):
         #'''数据预处理'''
         
         # 扩展X，添加x0列并设置为1
@@ -59,7 +59,7 @@ class RidgeRegression:
         # 使用岭回归算法估算w
         self.w = self._ridge(_X_train, y_train)
         
-    def predict(self, X=X_train):
+    def predict(self, X):
         #'''预测'''
         # 预处理X_train(添加x0列并设置为1)
         _X = self._preprocess_data_X(X)
@@ -88,7 +88,11 @@ class LassoRegression:
         return y_pred
 
 # 进行岭回归
-
+def ridge(data):
+    ridge_reg = RidgeRegression(lambda_v=0.05) # 设置参数alpha
+    ridge_reg.train(X_train, y_train) # 使用训练数据拟合模型
+    result = ridge_reg.predict(data) # 进行预测
+    return float(result)
 def lasso(data):
     lasso_reg = LassoRegression(alpha=0.1)
     lasso_reg.fit(X_train,y_train)
