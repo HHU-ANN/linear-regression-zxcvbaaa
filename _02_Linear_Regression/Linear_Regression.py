@@ -29,5 +29,6 @@ def main(data):
     print(weight)
     return data @ weight
 
-    
+if __name__ == '__main__':
+    main()
    
