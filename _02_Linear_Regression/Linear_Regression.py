@@ -9,6 +9,7 @@ except ImportError as e:
     import numpy as np
 
 import numpy as np
+from matplotlib import pyplot as plt
 
 def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
@@ -42,6 +43,13 @@ class ridge():
         return W
     def predict(self,x,w):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
         return np.dot(x,w)
+
+clf = ridge()
+w = clf.fit(X_train, y_train,a = 0.001,epochs = 10000,Lambda=0.2)
+
+
+#计算新的拟合值
+return y_1_pred = X_train * w[1] + w[0]
 
 def lasso(data):
     pass
