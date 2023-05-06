@@ -74,7 +74,7 @@ def lasso(data):
     
     y=np.mean(np.dot(X_train, theta))
     
-    print(y\n)
-    
+    print(y)
+    print("y")
     print(y_train)
     return float(y)
