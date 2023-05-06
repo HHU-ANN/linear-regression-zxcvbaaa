@@ -64,6 +64,7 @@ def ridge(data):
     result = ridge_reg.predict(data) # 进行预测
     return float(result)
 def lasso(data):
+    import numpy as np
     X_train, y_train = read_data()
     lasso_reg = Lasso( )
     w=lasso_reg.fit(x=X_train,y=y_train)
