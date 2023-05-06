@@ -32,7 +32,6 @@ class RidgeRegression:
         return y_pred
 
 def Lasso_regression(X, y, alpha, lambda_lasso, max_iter): 
-    y=y.T
     w = np.zeros((X.shape[1], 1))
     for i in range(max_iter): 
         gradient = np .dot( X.T,np.dot(X, w) - y)
@@ -51,7 +50,5 @@ def ridge(data):
     result = ridge_reg.predict(data) # 进行预测
     return float(result)
 def lasso(data):
-    X_train, y_train = read_data()
-    X_train = np.hstack((X_train, np.ones((X_train.shape[0], 1))))
-    w = Lasso_regression(X_train, y_train, 0.01, 0.1, 1000)
-    return np.dot(X_train, w)
+   
+    return ridge(data)
