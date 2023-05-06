@@ -31,28 +31,12 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
-class Lasso:
-    def __init__(self, alpha=0.1, tol=0.01, max_iter=1000, learning_rate=0.01):
-        self.alpha = alpha
-        self.tol = tol
-        self.max_iter = max_iter
-        self.learning_rate = learning_rate
-        
-    def fit(self, X, y):
-        n, m = X.shape
-        self.theta = np.zeros(m)
-        self.intercept = 0
-        
-        for iter_num in range(self.max_iter):
-            grad = X.T.dot(X.dot(self.theta) + self.intercept - y) / n
-            self.intercept -= self.learning_rate * grad[-1]
-            self.theta -= self.learning_rate * (grad + self.alpha * np.sign(self.theta))
-            if np.max(np.abs(grad)) < self.tol:
-                    break
-     
-    def predict(self, X):
-        return X.dot(self.theta) + self.intercept
-    
+def gradient_descent(X, y, theta, alpha, num_iters, lambd):
+    m = len(y)
+    for i in range(num_iters):
+        h = X.dot(theta)
+        theta = theta - alpha * (1/m) * (X.T.dot(h-y) + lambd*np.sign(theta))
+    return theta
      
         
 # 进行岭回归
@@ -66,7 +50,11 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    lasso = Lasso(alpha=0.1, tol=0.01, max_iter=1000, learning_rate=0.01)
-    lasso.fit(X_train, y_train)
-    y_pred = lasso.predict(X_train)
-    return float(y_pred)
+    m, n = X_train.shape
+    X = np.hstack((np.ones((m, 1)), X_train))
+    theta = np.zeros(n+1)
+    alpha = 0.01
+    num_iters = 1000
+    lambd = 0.1
+    theta = gradient_descent(X, y_train, theta, alpha, num_iters, lambd)
+    return float(np.dot(X, theta))
