@@ -48,7 +48,7 @@ def Gradient_function(X, y, theta):
 # 进行岭回归
 def ridge(data):
     X_train, y_train = read_data()
-    ridge_reg = Ridge_function(alpha=0.02) 
+    ridge_reg = Ridge_function(alpha=0.002) 
     ridge_reg.train(X_train, y_train) 
     data_ = np.reshape(data, (1, -1)) 
     result = ridge_reg.pre(data_) 
@@ -57,7 +57,7 @@ def lasso(data):
     X_train, y_train = read_data()
     
     learning_rate = 0.00000015  # 学习率
-    n_iterations = 1000000 # 迭代次数
+    n_iterations = 100000 # 迭代次数
     
     theta = np.zeros(6) 
 
