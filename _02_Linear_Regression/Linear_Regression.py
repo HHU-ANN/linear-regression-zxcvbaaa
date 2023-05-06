@@ -76,4 +76,5 @@ def lasso(data):
     lamda = 0.1
     max_iter = 100
     theta=gradient_descent(X_train, y_train)
+    print(theta)
     return float(np.dot(X_train, theta))
