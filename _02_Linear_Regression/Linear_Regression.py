@@ -33,22 +33,43 @@ class RidgeRegression:
 
 # 建立Lasso回归类
 class Lasso():
-    def __init__(self):
-        pass
+    def __init__(self, alpha=0.1, max_iter=1000, tol=0.0001):
+        self.alpha = alpha
+        self.max_iter = max_iter
+        self.tol = tol
+        self.coef_ = None
+        self.coef_ = None
     
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
     def fit(self,x,y):  
-        n = x.shape[1]
-        W=np.mat(np.ones((n,1)))
-        m= x.shape[0]
+        n_samples, n_features = X.shape
+        self.coef_ = np.zeros(n_features)
+        self.intercept_ = np.mean(y)
         #循环epochs次
-        for i in range(1000):
-            gradient = x.T*(x*W-y)/m + 0.01 * np.sign(W)
-            W=W-0.01 * gradient
+        for i in range(self.max_iter):
+            old_coef = self.coef_.copy()
+            for j in range(n_features):
+                X_j = X[:, j]
+                X_without_j = np.delete(X, j, axis=1)
+                y_pred = self.predict(X)
+                y_pred = self.predict(X)
+                penalized_term = self.alpha * np.sign(self.coef_[j])
+                self.coef_[j] = self.soft_threshold(r_j, self.alpha) / np.dot(X_j, X_j)
+                if np.linalg.norm(self.coef_ - old_coef) < self.tol:
+                    break
+                
         return W
-    def predict(self,x,w):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
-        return np.dot(x,w)
+    def predict(self,X):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
+         return np.dot(X, self.coef_) + self.intercept_
 
+    def soft_threshold(self, r_j, lambda_):
+        if r_j < -lambda_:
+            return (r_j + lambda_) 
+        elif r_j > lambda_:
+            elif r_j > lambda_:
+        else:
+            return 0
+        
 
 # 进行岭回归
 def ridge(data):
@@ -61,7 +82,7 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    lasso_reg = Lasso( )
-    w=lasso_reg.fit(x=X_train,y=y_train)
-    result = lasso_reg.predict(X_train,w) # 进行预测
-    return float(result)
+    lasso_reg = Lasso(alpha=0.1, max_iter=1000, tol=0.0001 )
+    lasso_reg.fit(X_train,y_train)
+    y_pred = model.predict(X_train)# 进行预测
+    return float(y_pred)
