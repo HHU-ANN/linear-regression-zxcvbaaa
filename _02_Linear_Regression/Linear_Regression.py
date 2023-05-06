@@ -36,26 +36,32 @@ class RidgeRegression:
         return y_pred
 
 # 建立Lasso回归类
-class LassoRegression:
-    def __init__(self, alpha, learning_rate=0.01, max_iterations=1000):
-        self.alpha = alpha
-        self.learning_rate = learning_rate
-        self.max_iterations = max_iterations
-        
-    def fit(self, X, y):
-        n_samples, n_features = np.shape(X)
-        self.weights = np.zeros((n_features, 404))
-        
-        for i in range(self.max_iterations):
-            y_pred = np.dot(X, self.weights)
-            error = y - y_pred
-            # LASSO的梯度下降中的L1函数的导数形式，即如果x>0取1否则-1
-            self.weights += self.learning_rate * (np.dot(X.T, error) -
-                                                   self.alpha * np.sign(self.weights))
+class lasso():
+    def __init__(self):
+        pass
     
-    def predict(self, X):
-        y_pred = np.dot(X, self.weights)
-        return y_pred
+    #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
+    def fit(self,x,y,a,epochs,Lambda):  
+        #计算总数据量
+        m=x.shape[0]
+        #给x添加偏置项
+        X = np.concatenate((np.ones((m,1)),x),axis=1)
+        #计算总特征数
+        n = X.shape[1]
+        #初始化W的值,要变成矩阵形式
+        W=np.mat(np.ones((n,1)))
+        #X转为矩阵形式
+        xMat = np.mat(X)
+        #y转为矩阵形式，这步非常重要,且要是m x 1的维度格式
+        yMat =np.mat(y.reshape(-1,1))
+        #循环epochs次
+        for i in range(epochs):
+            gradient = xMat.T*(xMat*W-yMat)/m + Lambda * np.sign(W)
+            W=W-a * gradient
+        return W
+    def predict(self,x,w):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
+        return np.dot(x,w)
+
 
 # 进行岭回归
 def ridge(data):
@@ -66,8 +72,8 @@ def ridge(data):
     result = ridge_reg.predict(data) # 进行预测
     return float(result)
 def lasso(data):
-    lasso_reg = LassoRegression(alpha=0.1)
-    lasso_reg.fit(X_train,y_train)
+    lasso_reg = lasso()
+    w=lasso_reg.fit(x=X_train,y=y_train,a=0.01,epochs=1000,Lambda=0.1)
     data = np.reshape(data,(1,-1))
-    result = lasso_reg.predict(data) # 进行预测
+    result = lasso_reg.predict(data,w) # 进行预测
     return float(result)
