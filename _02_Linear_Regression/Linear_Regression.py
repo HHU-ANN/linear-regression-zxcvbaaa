@@ -38,7 +38,7 @@ class Lasso():
         self.max_iter = max_iter
         self.tol = tol
         self.coef_ = None
-        self.coef_ = None
+        self.intercept_ = None
     
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
     def fit(self,X,y):  
@@ -49,8 +49,8 @@ class Lasso():
         for i in range(self.max_iter):
             old_coef = self.coef_.copy()
             for j in range(n_features):
-                X_j = X
-                X_without_j = np.delete(X, j, axis=1)
+                X_j = X[:, j]
+                X_without_j = np.concatenate((np.delete(X, j, axis=1),np.ones( n_samples)),axis=1)   
                 y_pred = self.predict(X)
                 r_j = X_j - np.dot(X_without_j, self.coef_)
                 penalized_term = self.alpha * np.sign(self.coef_[j])
