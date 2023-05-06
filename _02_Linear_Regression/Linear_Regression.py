@@ -47,7 +47,7 @@ class Lasso():
         for i in range(self.max_iter):
             grad = self._compute_gradient(X, y)
             self.coef_ -= self.alpha * grad
-            self.coef_ = self._soft_threshold(self,coef_, self.alpha)
+            self.coef_ = self._soft_threshold(self.coef_, self.alpha)
             if np.linalg.norm(grad, ord=1) < self.tol:
                 break
            
@@ -60,7 +60,7 @@ class Lasso():
         grad = np.dot(X.T, error)
         return grad
        
-      def _soft_threshold(self, coef, alpha):
+    def _soft_threshold(self, coef, alpha):
          return np.sign(coef) * np.maximum(np.abs(coef) - alpha, 0)
         
         
