@@ -31,7 +31,7 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
-def loss_function(X, y, theta):
+def Loss_function(X, y, theta):
     n_samples = len(X)
     y_pred = X.dot(theta)
     error = y_pred - y
@@ -39,7 +39,7 @@ def loss_function(X, y, theta):
     l1_loss = l1_penalty * np.sum(np.abs(theta))
     return mse_loss + l1_loss
 
-def gradient_function(X, y, theta):
+def Gradient_function(X, y, theta):
     n_samples = len(X)
     y_pred = X.dot(theta)
     error = y_pred - y
@@ -62,9 +62,9 @@ def lasso(data):
     l1_penalty = 0.1  # L1正则化系数
     
     for i in range(n_iterations):
-    gradient = gradient_function(X_train, y_train, theta)
+    gradient = Gradient_function(X_train, y_train, theta)
     theta = theta - learning_rate * gradient
-    cost = loss_function(X_train, y_train, theta)
+    cost = Loss_function(X_train, y_train, theta)
     
     theta=theta.flatten()
    
