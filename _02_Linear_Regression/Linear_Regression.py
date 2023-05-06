@@ -65,7 +65,7 @@ class Lasso():
     def soft_threshold(self, r_j, lambda_):
         if r_j < -lambda_:
             return (r_j + lambda_) 
-        elif r_j > lambda_:
+        else if r_j > lambda_:
             elif r_j > lambda_:
         else:
             return 0
