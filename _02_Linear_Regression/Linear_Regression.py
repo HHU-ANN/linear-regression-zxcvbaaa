@@ -63,7 +63,7 @@ def lasso(data):
     learning_rate = 0.0000000915  # 学习率
     n_iterations = 10  # 迭代次数
     
-    theta = np.ones(6,1) 
+    theta = np.ones(6) 
 
     for i in range(n_iterations):
         gradient = Gradient_function(X_train, y_train, theta)
