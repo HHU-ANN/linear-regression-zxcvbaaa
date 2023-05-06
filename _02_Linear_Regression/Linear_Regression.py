@@ -50,9 +50,9 @@ class Lasso():
             old_coef = self.coef_.copy()
             for j in range(n_features):
                 X_j = X[:, j]
-                X_without_j = np.concatenate((np.delete(X, j, axis=1),np.ones( n_samples)),axis=1)   
+                X_without_j = np.delete(X, j, axis=1)  
                 y_pred = self.predict(X)
-                r_j = X_j - np.dot(X_without_j, self.coef_)
+                r_j = X_j - np.dot(X_without_j, np.delete(self.coef_, j, axis=1))
                 penalized_term = self.alpha * np.sign(self.coef_[j])
                 self.coef_[j] = self.soft_threshold(r_j, self.alpha) / np.dot(X_j, X_j)
                 if np.linalg.norm(self.coef_ - old_coef) < self.tol:
