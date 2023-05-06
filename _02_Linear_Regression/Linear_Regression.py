@@ -61,7 +61,7 @@ def lasso(data):
     X_train, y_train = read_data()
     
     learning_rate = 0.01  # 学习率
-    n_iterations = 1  # 迭代次数
+    n_iterations = 1000  # 迭代次数
     
     theta = np.ones(X_train.shape[1]) 
 
