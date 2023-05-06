@@ -44,7 +44,7 @@ class Lasso():
     def fit(self,X,y):  
         n_samples, n_features = x.shape
         n_features += 1
-        self.coef_ = (np.zeros(n_features)
+        self.coef_ = np.zeros(n_features)
         self.intercept_ = np.mean(y)
         #循环epochs次
         for i in range(self.max_iter):
