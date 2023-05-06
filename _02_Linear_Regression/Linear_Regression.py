@@ -39,9 +39,8 @@ class Lasso():
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
     def fit(self,x,y):  
         #计算总数据量
-        m=x.shape[0]
         #给x添加偏置项
-        X = np.concatenate((x,np.ones((m,1))),axis=1)
+        X = np.shape(X)[1]
         #计算总特征数
         n = X.shape[1]
         #初始化W的值,要变成矩阵形式
@@ -68,7 +67,7 @@ def lasso(data):
     X_train, y_train = read_data()
     lasso_reg = Lasso( )
     w=lasso_reg.fit(x=X_train,y=y_train)
-     m=X_train.shape[0]
-        X = np.concatenate((x,np.ones((m,1))),axis=1)
+     
+        X = np.shape(X_train)[1]
     result = lasso_reg.predict(X,w) # 进行预测
     return float(result)
