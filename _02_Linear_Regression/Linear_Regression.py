@@ -72,8 +72,8 @@ def ridge(data):
     result = ridge_reg.predict(data) # 进行预测
     return float(result)
 def lasso(data):
-    lasso_reg = lasso()
+    lasso_reg = lasso(x=X_train,y=y_train,a=0.01,epochs=1000,Lambda=0.1)
     w=lasso_reg.fit(x=X_train,y=y_train,a=0.01,epochs=1000,Lambda=0.1)
-    data = np.reshape(data,(1,-1))
-    result = lasso_reg.predict(data,w) # 进行预测
+    X_train = np.concatenate((np.ones((m,1)),X_train),axis=1)
+    result = lasso_reg.predict(X_train,w) # 进行预测
     return float(result)
