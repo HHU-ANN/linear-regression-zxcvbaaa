@@ -31,32 +31,36 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
-# 建立Lasso回归类
-class Lasso():
-    def __init__(self):
-        pass
+def stageWise(xMat, yMat, eps=0.01, numIt=100):
     
-    #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
-    def fit(self,x,y,a,epochs,Lambda):  
-        #计算总数据量
-        m=x.shape[0]
-        #给x添加偏置项
-        X = np.concatenate((np.ones((m,1)),x),axis=1)
-        #计算总特征数
-        n = X.shape[1]
-        #初始化W的值,要变成矩阵形式
-        W=np.mat(np.ones((n,1)))
-        #X转为矩阵形式
-        xMat = np.mat(X)
-        #y转为矩阵形式，这步非常重要,且要是m x 1的维度格式
-        yMat =np.mat(y.reshape(-1,1))
-        #循环epochs次
-        for i in range(epochs):
-            gradient = xMat.T*(xMat*W-yMat)/m + Lambda * np.sign(W)
-            W=W-a * gradient
-        return W
-    def predict(self,x,w):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
-        return np.dot(x,w)
+    # 将数据转换为矩阵，并进行标准化处理
+    yMean = mean(yMat, 0)
+    yMat = yMat - yMean
+    # 特征标准化
+    xMat = regularize(xMat)
+    m, n = shape(xMat)
+    # 每次迭代的权重
+    returnMat = zeros((numIt, n))
+    # 创建向量ws来保存w的值
+    ws = zeros((n, 1))
+    wsBest = ws.copy()
+    for i in range(numIt):  # 遍历每轮迭代
+        print(ws.T)  # 打印w向量，用于分析执行的过程和效果
+        # 设置当前最小误差
+        lowestError = inf
+        # 遍历每个特征，分别计算增加或减少该特征对误差的影响
+        for j in range(n):
+            for sign in [-1, 1]:
+                wsTest = ws.copy()
+                wsTest[j] += eps * sign
+                yTest = xMat * wsTest
+                rssE = rssError(yMat.A, yTest.A)
+                if rssE < lowestError:
+                    lowestError = rssE
+                    wsBest = wsTest
+        ws = wsBest.copy()
+        returnMat[i, :] = ws.T
+    return returnMat
 
         
         
@@ -71,7 +75,4 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    lasso_reg = Lasso()
-    w=lasso_reg.fit(X_train,y_train,0.01,1000,0.02)
-    y_pred = lasso_reg.predict(X_train,w)# 进行预测
-    return float(y_pred)
+    return stageWise(X_train, y_train,0.01,200)
