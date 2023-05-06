@@ -40,6 +40,7 @@ class Lasso():
     def fit(self,x,y):  
         n = x.shape[1]
         W=np.mat(np.ones((n,1)))
+        m= x.shape[0]
         #循环epochs次
         for i in range(1000):
             gradient = x.T*(x*W-y)/m + 0.01 * np.sign(W)
