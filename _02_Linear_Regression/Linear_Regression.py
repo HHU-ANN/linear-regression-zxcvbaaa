@@ -60,8 +60,8 @@ def ridge(data):
 def lasso(data):
     X_train, y_train = read_data()
     
-    learning_rate = 0.0000001  # 学习率
-    n_iterations = 50  # 迭代次数
+    learning_rate = 0.0000003  # 学习率
+    n_iterations = 10  # 迭代次数
     
     theta = np.ones(X_train.shape[1]) 
 
