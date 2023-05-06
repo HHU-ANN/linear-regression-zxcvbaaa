@@ -41,7 +41,7 @@ class Lasso():
         self.coef_ = None
     
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
-    def fit(self,x,y):  
+    def fit(self,X,y):  
         n_samples, n_features = X.shape
         self.coef_ = np.zeros(n_features)
         self.intercept_ = np.mean(y)
