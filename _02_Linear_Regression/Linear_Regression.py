@@ -45,8 +45,8 @@ class Lasso():
         self.coef_ = np.zeros(n_features)
 
         for i in range(self.max_iter):
-             grad = self._compute_gradient(X, y)
-             self.coef_ -= self.alpha * grad
+            grad = self._compute_gradient(X, y)
+            self.coef_ -= self.alpha * grad
             self.coef_ = self._soft_threshold(self,coef_, self.alpha)
             if np.linalg.norm(grad, ord=1) < self.tol:
                 break
