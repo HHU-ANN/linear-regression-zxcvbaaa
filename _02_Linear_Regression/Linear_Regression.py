@@ -78,4 +78,4 @@ def lasso(data):
     lasso_reg = Lasso(alpha=0.1, max_iter=1000, tol=1e-6)
     lasso_reg.fit(X_train,y_train)
     y_pred = lasso_reg.predict(X_train)# 进行预测
-    return float(y_pred)
+    return y_pred
