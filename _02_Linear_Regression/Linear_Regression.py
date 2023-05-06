@@ -62,9 +62,9 @@ def lasso(data):
     l1_penalty = 0.1  # L1正则化系数
     
     for i in range(n_iterations):
-    gradient = Gradient_function(X_train, y_train, theta)
-    theta = theta - learning_rate * gradient
-    cost = Loss_function(X_train, y_train, theta)
+        gradient = Gradient_function(X_train, y_train, theta)
+        theta = theta - learning_rate * gradient
+        cost = Loss_function(X_train, y_train, theta)
     
     theta=theta.flatten()
    
