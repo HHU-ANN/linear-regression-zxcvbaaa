@@ -48,10 +48,10 @@ def Gradient_function(X, y, theta):
 # 进行岭回归
 def ridge(data):
     X_train, y_train = read_data()
-    ridge_t = Ridge_function(alpha=0.02) 
-    ridge_t.train(X_train, y_train) 
+    ridge_reg = Ridge_function(alpha=0.02) 
+    ridge_reg.train(X_train, y_train) 
     data_ = np.reshape(data, (1, -1)) 
-    result = ridge_t.pre(data_) 
+    result = ridge_reg.pre(data_) 
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
