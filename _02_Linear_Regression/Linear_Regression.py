@@ -46,7 +46,7 @@ class Lasso:
         for iter_num in range(self.max_iter):
             grad = X.T.dot(X.dot(self.theta) + self.intercept - y) / n
             self.intercept -= self.learning_rate * grad[-1]
-            self.theta -= self.learning_rate * (grad[:-1] + self.alpha * np.sign(self.theta))
+            self.theta -= self.learning_rate * (grad + self.alpha * np.sign(self.theta))
             if np.max(np.abs(grad)) < self.tol:
                     break
      
