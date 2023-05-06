@@ -58,4 +58,4 @@ def lasso(data):
     lambd = 0.1
     theta = gradient_descent(X, y_train, theta, alpha, num_iters, lambd)
     print(np.dot(X, theta))
-    return np.dot(X, theta)
+    return np.dot(X, theta)[0][0]
