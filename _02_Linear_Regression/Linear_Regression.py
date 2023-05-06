@@ -60,6 +60,8 @@ def lasso(data):
     learning_rate = 0.01  # 学习率
     n_iterations = 1000  # 迭代次数
     l1_penalty = 0.1  # L1正则化系数
+    theta = np.random.randn(X_train.shape[1], 1)  # 初始化模型参数
+
     
     for i in range(n_iterations):
         gradient = Gradient_function(X_train, y_train, theta)
