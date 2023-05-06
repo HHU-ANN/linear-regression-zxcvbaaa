@@ -31,36 +31,12 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
-def stageWise(xMat, yMat, eps=0.01, numIt=100):
-    
-    # 将数据转换为矩阵，并进行标准化处理
-    yMean = mean(yMat, 0)
-    yMat = yMat - yMean
-    # 特征标准化
-    xMat = regularize(xMat)
-    m, n = shape(xMat)
-    # 每次迭代的权重
-    returnMat = zeros((numIt, n))
-    # 创建向量ws来保存w的值
-    ws = zeros((n, 1))
-    wsBest = ws.copy()
-    for i in range(numIt):  # 遍历每轮迭代
-        print(ws.T)  # 打印w向量，用于分析执行的过程和效果
-        # 设置当前最小误差
-        lowestError = inf
-        # 遍历每个特征，分别计算增加或减少该特征对误差的影响
-        for j in range(n):
-            for sign in [-1, 1]:
-                wsTest = ws.copy()
-                wsTest[j] += eps * sign
-                yTest = xMat * wsTest
-                rssE = rssError(yMat.A, yTest.A)
-                if rssE < lowestError:
-                    lowestError = rssE
-                    wsBest = wsTest
-        ws = wsBest.copy()
-        returnMat[i, :] = ws.T
-    return returnMat
+def Lasso_regression(X, y, alpha, lambda_lasso, max_iter): 
+    w = np.zeros((X.shape[1], 1))
+    for i in range(max_iter): 
+        gradient = np .dot(XT, np.dot(X, w) - y)
+        w -= alpha * (gradient + lambda_lasso * np.sign(w))
+    return w
 
         
         
@@ -75,4 +51,6 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    return stageWise(X_train, y_train,0.01,200)
+    X_train = np.hstack((X_train, np.ones((X_train.shape[0], 1))))
+    w = lasso_regression(X_train, y_train, 0.01, 0.1, 1000)
+    return np.dot(X_train, w)
