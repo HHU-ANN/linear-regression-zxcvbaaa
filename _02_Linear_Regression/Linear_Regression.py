@@ -66,9 +66,10 @@ def lasso(data):
     theta = np.random.randn(X_train.shape[1], 1) 
 
     for i in range(n_iterations):
-    gradient = Gradient_function(X_train, y_train, theta)
-     theta = theta - learning_rate * gradient
-    cost = Loss_function(X_train, y_train, theta)
+        gradient = Gradient_function(X_train, y_train, theta)
+        theta = theta - learning_rate * gradient
+        cost = Loss_function(X_train, y_train, theta)
+    
     theta = theta.flatten()
     
     return float(np.dot(X_train, theta))
