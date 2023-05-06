@@ -70,7 +70,7 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-   m, n = X_train.shape
+    m = X_train.shape[0]
     X_train = np.hstack((np.ones((m,1)), X_train))
     alpha = 0.001
     lamda = 0.1
