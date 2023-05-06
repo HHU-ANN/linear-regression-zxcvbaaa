@@ -31,16 +31,33 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
-def cost(theta, X, y):
-    residuals = y - X.dot(theta)
-    rss = residuals.T.dot(residuals)  # 残差平方和
-    return rss[0, 0]
+def J(X, y, theta, lamda):
+    m = len(y)
+    J = np.sum((X @ theta - y) ** 2) / (2 * m) + lamda * np.sum(np.abs(theta))
+    return J
 
-def gradient(theta, X, y):
-    residuals = y - X.dot(theta)
-    grad = -X.T.dot(residuals) + L1_penalty*np.sign(theta)
+def grad(X, y, theta, lamda):
+    m = len(y)
+    grad = X.T @ (X @ theta - y) / m + lamda * np.sign(theta)
     return grad
-     
+
+# 梯度下降函数
+def gradient_descent(X, y, alpha=0.01, lamda=0.1, max_iter=1000):
+    m, n = X.shape
+    theta = np.zeros(n).reshape(-1,1)
+    iter = 0
+
+    while iter < max_iter:
+        cost = J(X, y, theta, lamda)
+        gradient = grad(X, y, theta, lamda)
+        theta = theta - alpha * gradient
+        
+        if iter % 100 == 0:
+            print("Iter: {}, Cost: {}".format(iter, cost))
+        
+        iter += 1
+    
+    return theta
         
 # 进行岭回归
 def ridge(data):
@@ -53,13 +70,10 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    m, n = X.shape
-    theta = np.zeros(n).reshape(-1, 1)
-    alpha = 0.01         # 学习率
-    iters = 1000         # 迭代次数
-    L1_penalty = 1   
-    
-    for i in range(iters):
-    theta -= alpha * gradient(theta, X, y)
-    
-    return float(np.dot(X, theta))
+   m, n = X_train.shape
+    X_train = np.hstack((np.ones((m,1)), X_train))
+    alpha = 0.001
+    lamda = 0.1
+    max_iter = 100
+    theta=gradient_descent(X_train, y_train)
+    return float(np.dot(X_train, theta))
