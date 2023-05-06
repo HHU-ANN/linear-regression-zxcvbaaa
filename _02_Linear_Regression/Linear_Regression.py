@@ -52,5 +52,5 @@ def ridge(data):
 def lasso(data):
     X_train, y_train = read_data()
     X_train = np.hstack((X_train, np.ones((X_train.shape[0], 1))))
-    w = lasso_regression(X_train, y_train, 0.01, 0.1, 1000)
+    w = Lasso_regression(X_train, y_train, 0.01, 0.1, 1000)
     return np.dot(X_train, w)
