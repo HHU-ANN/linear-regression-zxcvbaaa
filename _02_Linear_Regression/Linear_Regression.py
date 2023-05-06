@@ -16,20 +16,18 @@ def read_data(path='./data/exp02/'):
     return x, y
 
 # 建立岭回归类
-class RidgeRegression:
+class Ridge_function:
     def __init__(self, alpha):
         self.alpha = alpha
     
     def fit(self, X, y):
-        n_features = np.shape(X)[1]
+        n = np.shape(X)[1]
         # 添加正则项，防止过拟合
-        self.weights = np.dot(np.linalg.inv(np.dot(X.T, X) + 
-                               self.alpha*np.eye(n_features)), 
-                               np.dot(X.T, y))
+        self.weights = np.dot(np.linalg.inv(np.dot(X.T, X) + self.alpha*np.eye(n)), np.dot(X.T, y))
     
     def predict(self, X):
-        y_pred = np.dot(X, self.weights)
-        return y_pred
+        y_ = np.dot(X, self.weights)
+        return y_
 
 l1_penalty = 0.1  # L1正则化系数
     
@@ -51,11 +49,10 @@ def Gradient_function(X, y, theta):
 # 进行岭回归
 def ridge(data):
     X_train, y_train = read_data()
-    ridge_reg = RidgeRegression(alpha=0.01) # 设置参数alpha
+    ridge_reg = Ridge_function(alpha=0.02) # 设置参数alpha
     ridge_reg.fit(X_train, y_train) # 使用训练数据拟合模型
-    
-    data = np.reshape(data, (1, -1)) # 将数据改为2D矩阵形式
-    result = ridge_reg.predict(data) # 进行预测
+    data_ = np.reshape(data, (1, -1)) # 将数据改为2D矩阵形式
+    result = ridge_reg.predict(data_) # 进行预测
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
