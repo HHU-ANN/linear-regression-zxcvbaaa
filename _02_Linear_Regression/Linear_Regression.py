@@ -20,12 +20,11 @@ class Ridge_function:
     def __init__(self, alpha):
         self.alpha = alpha
     
-    def fit(self, X, y):
+    def train(self, X, y):
         n = np.shape(X)[1]
-        # 添加正则项，防止过拟合
         self.weights = np.dot(np.linalg.inv(np.dot(X.T, X) + self.alpha*np.eye(n)), np.dot(X.T, y))
     
-    def predict(self, X):
+    def pre(self, X):
         y_ = np.dot(X, self.weights)
         return y_
 
@@ -49,16 +48,16 @@ def Gradient_function(X, y, theta):
 # 进行岭回归
 def ridge(data):
     X_train, y_train = read_data()
-    ridge_reg = Ridge_function(alpha=0.02) # 设置参数alpha
-    ridge_reg.fit(X_train, y_train) # 使用训练数据拟合模型
-    data_ = np.reshape(data, (1, -1)) # 将数据改为2D矩阵形式
-    result = ridge_reg.predict(data_) # 进行预测
+    ridgedata = Ridge_function(alpha=0.02) 
+    ridgdata.train(X_train, y_train) 
+    data_ = np.reshape(data, (1, -1)) 
+    result = ridge_reg.pre(data_) 
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
     
     learning_rate = 0.00000015  # 学习率
-    n_iterations = 20  # 迭代次数
+    n_iterations = 1000 # 迭代次数
     
     theta = np.zeros(6) 
 
