@@ -72,7 +72,6 @@ def lasso(data):
     X_train, y_train = read_data()
     lasso_reg = Lasso( )
     w=lasso_reg.fit(x=X_train,y=y_train)
-    m=X_train.shape[0]
-        X_train = np.concatenate((np.ones((m,1)),X_train ),axis=1)
+    X_train = np.concatenate((np.ones((404,1)),X_train ),axis=1)
     result = lasso_reg.predict(X_train,w) # 进行预测
     return float(result)
