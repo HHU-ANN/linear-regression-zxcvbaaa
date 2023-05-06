@@ -31,6 +31,8 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
+l1_penalty = 0.1  # L1正则化系数
+    
 def Loss_function(X, y, theta):
     n_samples = len(X)
     y_pred = X.dot(theta)
@@ -59,7 +61,7 @@ def lasso(data):
     X_train, y_train = read_data()
     learning_rate = 0.01  # 学习率
     n_iterations = 1000  # 迭代次数
-    l1_penalty = 0.1  # L1正则化系数
+    
     theta = np.random.randn(X_train.shape[1], 1)  # 初始化模型参数
 
     
