@@ -73,5 +73,5 @@ def lasso(data):
     X_train, y_train = read_data()
     lasso_reg = Lasso()
     w=lasso_reg.fit(X_train,y_train,0.01,1000,0.02)
-    y_pred = X_train * w[0]+w[1]# 进行预测
+    y_pred = lasso_reg.predict(X_train,w)# 进行预测
     return float(y_pred)
