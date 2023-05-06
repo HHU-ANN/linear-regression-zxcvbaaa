@@ -52,7 +52,7 @@ class Lasso():
                 X_j = X[:, j]
                 X_without_j = np.delete(X, j, axis=1)
                 y_pred = self.predict(X)
-                y_pred = self.predict(X)
+                r_j = X_j - np.dot(X_without_j, self.coef_)
                 penalized_term = self.alpha * np.sign(self.coef_[j])
                 self.coef_[j] = self.soft_threshold(r_j, self.alpha) / np.dot(X_j, X_j)
                 if np.linalg.norm(self.coef_ - old_coef) < self.tol:
