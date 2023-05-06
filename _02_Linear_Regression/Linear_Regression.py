@@ -33,11 +33,13 @@ class RidgeRegression:
 
 # 建立Lasso回归类
 class lasso():
-    def __init__(self):
-        pass
+    def __init__(self,a,epochs,Lambda):
+        self.a=a
+        self.epochs=epochs
+        self.Lambda=Lambda
     
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
-    def fit(self,x,y,a,epochs,Lambda):  
+    def fit(self,x,y):  
         #计算总数据量
         m=x.shape[0]
         #给x添加偏置项
@@ -70,8 +72,8 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    lasso_reg = lasso()
-    w=lasso_reg.fit(x=X_train,y=y_train,a=0.01,epochs=1000,Lambda=0.1)
+    lasso_reg = lasso(a=0.01,epochs=1000,Lambda=0.1)
+    w=lasso_reg.fit(x=X_train,y=y_train)
     X_train = np.concatenate((np.ones((6,1)),X_train),axis=1)
     result = lasso_reg.predict(X_train,w) # 进行预测
     return float(result)
