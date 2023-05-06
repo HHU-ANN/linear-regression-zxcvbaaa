@@ -73,7 +73,4 @@ def lasso(data):
     theta = theta.flatten()
     y=np.dot(data, theta)
     
-    #if data[2]:
-      #  return 37.0
-   # else:
-        return float(y)
+    return float(y)
