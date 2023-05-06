@@ -31,14 +31,29 @@ class RidgeRegression:
         y_pred = np.dot(X, self.weights)
         return y_pred
 
-def Lasso_regression(X, y, alpha, lambda_lasso, max_iter): 
-    w = np.zeros((X.shape[1], 1))
-    for i in range(max_iter): 
-        gradient = np .dot( X.T,np.dot(X, w) - y)
-        w -= alpha * (gradient + lambda_lasso * np.sign(w))
-    return w
-
+class Lasso:
+    def __init__(self, alpha=0.1, tol=0.01, max_iter=1000, learning_rate=0.01):
+        self.alpha = alpha
+        self.tol = tol
+        self.max_iter = max_iter
+        self.learning_rate = learning_rate
         
+    def fit(self, X, y):
+        n, m = X.shape
+        self.theta = np.zeros(m)
+        self.intercept = 0
+        
+        for iter_num in range(self.max_iter):
+            grad = X.T.dot(X.dot(self.theta) + self.intercept - y) / n
+            self.intercept -= self.learning_rate * grad[-1]
+            self.theta -= self.learning_rate * (grad[:-1] + self.alpha * np.sign(self.theta))
+            if np.max(np.abs(grad)) < self.tol:
+                    break
+     
+    def predict(self, X):
+        return X.dot(self.theta) + self.intercept
+    
+     
         
 # 进行岭回归
 def ridge(data):
@@ -50,5 +65,8 @@ def ridge(data):
     result = ridge_reg.predict(data) # 进行预测
     return float(result)
 def lasso(data):
-   
-    return ridge(data)
+    X_train, y_train = read_data()
+    lasso = Lasso(alpha=0.1, tol=0.01, max_iter=1000, learning_rate=0.01)
+    lasso.fit(X_train, y_train)
+    y_pred = lasso.predict(X_train)
+    return float(y_pred)
