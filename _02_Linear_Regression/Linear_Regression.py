@@ -35,7 +35,6 @@ class RidgeRegression:
 class Lasso():
     def __init__(self):
         self.a=0.001
-        self.epochs=1000
         self.Lambda=0.1
     
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
@@ -53,7 +52,7 @@ class Lasso():
         #y转为矩阵形式，这步非常重要,且要是m x 1的维度格式
         yMat =np.mat(y.reshape(-1,1))
         #循环epochs次
-        for i in range(epochs):
+        for i in range(1000):
             gradient = xMat.T*(xMat*W-yMat)/m + Lambda * np.sign(W)
             W=W-a * gradient
         return W
