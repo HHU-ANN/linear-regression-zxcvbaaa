@@ -72,9 +72,9 @@ def lasso(data):
     
     theta = theta.flatten()
     
-    y=np.mean(np.dot(X_train, theta))
-    
-    print(y)
-    print("\n")
-    print(y_train)
-    return float(y)
+    y=np.dot(X_train, theta)
+    for i in range(21)：
+        print(y)
+        print("\n")
+        print(y_train)
+        return float(y[i])
