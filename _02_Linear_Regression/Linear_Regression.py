@@ -48,7 +48,7 @@ def Gradient_function(X, y, theta):
 # 进行岭回归
 def ridge(data):
     X_train, y_train = read_data()
-    ridge_reg = Ridge_function(alpha=0.05) 
+    ridge_reg = Ridge_function(alpha=0.025) 
     ridge_reg.train(X_train, y_train) 
     data_ = np.reshape(data, (1, -1)) 
     result = ridge_reg.pre(data_) 
