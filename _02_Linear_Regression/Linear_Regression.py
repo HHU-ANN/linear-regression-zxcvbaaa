@@ -69,6 +69,5 @@ def lasso(data):
     lasso_reg = Lasso( )
     w=lasso_reg.fit(x=X_train,y=y_train)
     X_train = np.concatenate(X_train,(np.ones((404,1)) ),axis=1)
-     xMat = np.mat(X_train)
-    result = lasso_reg.predict(XMat,w) # 进行预测
+    result = lasso_reg.predict(X_train,w) # 进行预测
     return float(result)
