@@ -34,8 +34,7 @@ class RidgeRegression:
 # 建立Lasso回归类
 class Lasso():
     def __init__(self):
-        self.a=0.001
-        self.Lambda=0.1
+        pass
     
     #梯度下降法迭代训练模型参数,x为特征数据，y为标签数据，a为学习率，epochs为迭代次数
     def fit(self,x,y):  
@@ -53,8 +52,8 @@ class Lasso():
         yMat =np.mat(y.reshape(-1,1))
         #循环epochs次
         for i in range(1000):
-            gradient = xMat.T*(xMat*W-yMat)/m + Lambda * np.sign(W)
-            W=W-a * gradient
+            gradient = xMat.T*(xMat*W-yMat)/m + 0.01 * np.sign(W)
+            W=W-0.01 * gradient
         return W
     def predict(self,x,w):  #这里的x也要加偏置，训练时x是什么维度的数据，预测也应该保持一样
         return np.dot(x,w)
