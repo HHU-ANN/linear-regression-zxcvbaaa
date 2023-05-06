@@ -72,4 +72,6 @@ def lasso(data):
     
     theta = theta.flatten()
     
+    print(X_train)
+    
     return float(np.dot(X_train, theta))
