@@ -32,6 +32,7 @@ class RidgeRegression:
         return y_pred
 
 def Lasso_regression(X, y, alpha, lambda_lasso, max_iter): 
+    y=y.T
     w = np.zeros((X.shape[1], 1))
     for i in range(max_iter): 
         gradient = np .dot( X.T,np.dot(X, w) - y)
