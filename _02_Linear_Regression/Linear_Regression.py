@@ -51,7 +51,7 @@ def ridge(data):
     ridge_t = Ridge_function(alpha=0.02) 
     ridge_t.train(X_train, y_train) 
     data_ = np.reshape(data, (1, -1)) 
-    result = ridge_reg.pre(data_) 
+    result = ridge_t.pre(data_) 
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
