@@ -33,8 +33,8 @@ class RidgeRegression:
 
 # 建立Lasso回归类
 class lasso():
-    def __init__(self,a,epochs,Lambda):
-        self.a=a
+    def __init__(self,epochs,Lambda):
+        self.a=0.001
         self.epochs=epochs
         self.Lambda=Lambda
     
@@ -72,7 +72,7 @@ def ridge(data):
     return float(result)
 def lasso(data):
     X_train, y_train = read_data()
-    lasso_reg = lasso(a=0.01,epochs=1000,Lambda=0.1)
+    lasso_reg = lasso(epochs=1000,Lambda=0.1)
     w=lasso_reg.fit(x=X_train,y=y_train)
     X_train = np.concatenate((np.ones((6,1)),X_train),axis=1)
     result = lasso_reg.predict(X_train,w) # 进行预测
