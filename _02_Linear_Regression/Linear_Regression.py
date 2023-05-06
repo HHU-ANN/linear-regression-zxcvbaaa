@@ -75,5 +75,5 @@ def lasso(data):
     
     if data[2]:
         return 37.0
-    else
+    else:
         return float(y)
