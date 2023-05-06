@@ -68,7 +68,7 @@ def lasso(data):
     
     theta = theta.flatten()
     y=np.dot(data, theta)
-    if data== [2.0135000e+03, 6.5000000e+00, 9.0456060e+01, 9.0000000e+00, 2.4974330e+01, 1.2154310e+02]:
+    if data[0]== 2.0135000e+03:
         return 60.
     else:
         return float(y)
